@@ -21,20 +21,22 @@ def GRE_dcm_analysis(path, plot, Npts,coil,dB):
     #Extract avereges and image from dicom file
     averages = data.NumberOfAverages
     img = data.pixel_array
-    
-    #flatten signal and get the noise
-    flatSignal = img.flatten()
-    sortSignal = sorted(flatSignal)
-    noise = sortSignal[0:1000]
-    noiseSD = np.std(noise)
-    
+    flatImg = np.flatten(img)
+    matsize = 6
+     
+    top_left = img[:matsize, :matsize]
+    top_right = img[:matsize, -matsize:]
+    bottom_left = img[-matsize:, :matsize]
+    bottom_right = img[-matsize:, -matsize:]
+    comb_corner = np.concatenate([top_left.flatten(), top_right.flatten(), bottom_left.flatten(), bottom_right.flatten()])
+     
+    noiseSD = np.std(comb_corner)
     #Calculate and SNR image
     SNRimg = img/noiseSD
-    
     #dB or no dB calculation
     if dB == 1:
         print('You choose the calculate SNR in dB')
-        SNR = 10*np.log10(SNRimg)
+        SNR = 10*np.log10(np.abs(SNRimg))
         
         flatSNRdB = SNR.flatten()
         sorted_part_indices = np.argsort(flatSNRdB)  # Get indices that would sort the array
@@ -48,11 +50,11 @@ def GRE_dcm_analysis(path, plot, Npts,coil,dB):
         top_part_coords = np.unravel_index(top_part_indices, SNR.shape)
     else:
             
-        sorted_part_indices = np.argsort(flatSignal)  # Get indices that would sort the array
+        sorted_part_indices = np.argsort(flatImg)  # Get indices that would sort the array
                
         top_part_indices = sorted_part_indices[-Npts:]  # Indices of the top N values
                
-        top_SNR_values = flatSignal[top_part_indices]
+        top_SNR_values = flatImg[top_part_indices]
                
         SNR_mean = np.mean(top_SNR_values)
                
