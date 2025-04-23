@@ -22,7 +22,7 @@ def GRE_dcm_analysis(path, plot, Npts,coil,dB):
     averages = data.NumberOfAverages
     img = data.pixel_array
     flatImg = np.flatten(img)
-    matsize = 6
+    matsize = 5
      
     top_left = img[:matsize, :matsize]
     top_right = img[:matsize, -matsize:]
