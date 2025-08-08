@@ -30,7 +30,7 @@ def GRE_dcm_analysis(path, plot, Npts,coil,dB):
     bottom_right = img[-matsize:, -matsize+5:]
     comb_corner = np.concatenate([top_left.flatten(), top_right.flatten(), bottom_left.flatten(), bottom_right.flatten()])
      
-    noiseSD = np.std(comb_corner)
+    noiseSD = np.std(comb_corner)/0.66
     #Calculate and SNR image
     SNRimg = img/noiseSD
     #dB or no dB calculation
