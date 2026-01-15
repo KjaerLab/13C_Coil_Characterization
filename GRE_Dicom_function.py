@@ -21,7 +21,7 @@ def GRE_dcm_analysis(path, plot, Npts,coil,dB):
     #Extract avereges and image from dicom file
     averages = data.NumberOfAverages
     img = data.pixel_array
-    flatImg = np.flatten(img)
+    flatImg = img.flatten()
     matsize = 10
      
     top_left = img[:matsize, :matsize+5]
