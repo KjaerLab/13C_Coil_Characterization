@@ -24,10 +24,10 @@ def GRE_dcm_analysis(path, plot, Npts,coil,dB):
     flatImg = img.flatten()
     matsize = 10
      
-    top_left = img[:matsize, :matsize+5]
-    top_right = img[:matsize, -matsize+5:]
-    bottom_left = img[-matsize:, :matsize+5]
-    bottom_right = img[-matsize:, -matsize+5:]
+    top_left = img[:matsize, :matsize+15]
+    top_right = img[:matsize, -matsize+15:]
+    bottom_left = img[-matsize:, :matsize+15]
+    bottom_right = img[-matsize:, -matsize+15:]
     comb_corner = np.concatenate([top_left.flatten(), top_right.flatten(), bottom_left.flatten(), bottom_right.flatten()])
      
     noiseSD = np.std(comb_corner)
